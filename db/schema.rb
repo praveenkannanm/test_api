@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_150952) do
+ActiveRecord::Schema.define(version: 2019_02_05_025627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "list_id"
+    t.integer "created_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by"], name: "index_cards_on_created_by"
+    t.index ["list_id"], name: "index_cards_on_list_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "card_id"
+    t.integer "created_by"
+    t.integer "parent_comment_id"
+    t.integer "comment_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_comments_on_card_id"
+    t.index ["comment_type"], name: "index_comments_on_comment_type"
+    t.index ["created_by"], name: "index_comments_on_created_by"
+    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+  end
 
   create_table "list_users", force: :cascade do |t|
     t.bigint "user_id"

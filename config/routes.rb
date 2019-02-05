@@ -11,8 +11,15 @@ Rails.application.routes.draw do
       resources :lists do
         member do
           get :assing_member
+          get :unassing_member
         end
+        resources :cards
       end
+
+      resources :cards do
+        resources :comments
+      end
+
 
     end
   end

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
 
   has_many :owned_lists, class_name: 'List', foreign_key: 'created_by'
+  has_many :owned_cards, class_name: 'Card', foreign_key: 'created_by'
+
   has_many :list_users, dependent: :destroy
   has_many :lists, through: :list_users
 
@@ -41,6 +43,12 @@ class User < ApplicationRecord
     else
       lists.offset(start).limit(10)
     end
+  end
+
+  def user_cards(params)
+    start = params[:start] || 0
+    limit = params[:limit] || 0
+    owned_cards.offset(start).limit(10)
   end
 
 end
