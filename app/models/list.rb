@@ -8,7 +8,7 @@ class List < ApplicationRecord
   #return cards with order of comments count
   def get_cards
     cards.select('cards.*')
-         .join('LEFT JOIN comments ON comments.card_id = cards.id and comments.comments_type = 1')
+         .joins('LEFT JOIN comments ON comments.card_id = cards.id and comments.comment_type = 1')
          .group('cards.id')
          .order('count(comments.id) desc')
   end
